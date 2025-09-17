@@ -1,0 +1,39 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ dev, main ]   # Trigger on push to dev or main
+  pull_request:
+    branches: [ dev, main ]   # Trigger on PRs to dev or main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout the repo
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      # Step 2: Setup Python
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.11
+
+      # Step 3: Install dependencies
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      # Step 4: Run tests
+      - name: Run Tests
+        run: |
+          pytest tests/
+
+      # Step 5 (Optional): Deploy
+      # Example: deploy to Heroku, AWS, or any cloud
+      #- name: Deploy
+      #  run: |
+      #    echo "Deployment commands here"
