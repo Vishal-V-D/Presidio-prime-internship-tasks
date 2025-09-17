@@ -31,3 +31,20 @@ def totalFruit(self, fruits: List[int]) -> int:
                 l+=1
             m=max(m,r-l+1)
         return m
+
+
+from sortedcontainers import SortedList
+
+
+def maxSlidingWindow(self, nums: List[int], k: int) -> List[int]:
+        if not nums:
+            return []
+        sl = SortedList()
+        res = []
+        for i in range(len(nums)):
+            sl.add(nums[i])
+            if i >= k:
+                sl.remove(nums[i - k])
+            if i >= k - 1:
+                res.append(sl[-1])
+        return res
